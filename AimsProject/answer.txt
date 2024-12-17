@@ -1,0 +1,19 @@
+Câu hỏi ở 9. : 
+	- Class Cart tập hợp các class Media (bao gồm DigitalVideoDisc, CompactDisc, Book) thông qua danh sách itemsOrdered
+	- Class Store tập hợp các class Media (bao gồm DigitalVideoDisc, CompactDisc, Book) thông qua danh sách items
+
+Câu hỏi ở 10. : 
+	Khi truyền vào Obj không phải là Media hoặc Track, phương thức equals() sẽ trả về false
+
+Câu hỏi ở 11. :
+	- Mỗi lớp (DigitalVideoDisc, CompactDisc, Book) ghi đè phương thức toString() từ lớp cha Media.
+	- Khi in thông tin của một đối tượng, phiên bản toString() của lớp cụ thể sẽ được gọi, tạo ra đầu ra khác nhau tùy thuộc vào loại đối tượng.
+	- Hiện tượng này minh họa tính đa hình ở cấp độ hành vi, cho thấy cách mà Java tự động xử lý đúng phương thức dựa trên loại thực tế của đối tượng. Điều này giúp code trở nên linh hoạt, dễ bảo trì và mở rộng khi thêm lớp mới hoặc thay đổi cách hiển thị thông tin của các lớp hiện tại.
+
+Câu hỏi ở 12. : 
+	a. Lớp Media nên triển khai Comparable vì tất cả các loại phương tiện (Book, CompactDisc, DigitalVideoDisc) kế thừa từ nó.
+	b. Cách triển khai đảm bảo rằng đối tượng được so sánh dựa trên thứ tự ưu tiên của các thuộc tính, cụ thể:
+		+ So sánh tiêu đề.
+		+ Nếu tiêu đề giống nhau, xét đến giá trị giá cả.
+	c. Không, Comparable chỉ hỗ trợ một quy tắc sắp xếp mặc định vì nó yêu cầu ghi đè một phương thức duy nhất là compareTo. Nếu cần nhiều quy tắc sắp xếp, ta phải dùng Comparator.
+	d. Ghi đè phương thức compareTo() trong class DigitalVideoDisc.
