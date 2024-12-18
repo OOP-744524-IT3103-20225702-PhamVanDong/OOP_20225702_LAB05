@@ -25,6 +25,10 @@ public class Store {
         return null;
     }
 
+    public ArrayList<Media> getItems() {
+        return items;
+    }
+
     public void print (){
         System.out.println("***********************CART***********************" +
                 "\nOrdered Items:");

@@ -2,6 +2,7 @@ package hust.soict.dsai.aims;
 
 import hust.soict.dsai.aims.cart.Cart;
 import hust.soict.dsai.aims.media.*;
+import hust.soict.dsai.aims.screen.StoreScreen;
 import hust.soict.dsai.aims.store.Store;
 
 import java.util.ArrayList;
@@ -44,19 +45,19 @@ public class Aims {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
+
+        new StoreScreen(store, cart);
+
+        cart.print();
+
+
         do {
             showMenu();
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
             switch (choice) {
                 case 1:
-                    handleViewStore(store, cart, scanner);
-                    break;
-                case 2:
-                    handleViewStore(store, cart, scanner);
-                    break;
-                case 3:
-                    handleViewCart(cart, scanner);
+                    cart.print();
                     break;
                 case 0:
                     System.out.println("Exiting AIMS. Goodbye!");
