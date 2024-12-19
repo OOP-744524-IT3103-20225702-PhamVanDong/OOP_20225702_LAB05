@@ -3,7 +3,7 @@ package hust.soict.dsai.aims.media;
 import java.util.Comparator;
 
 public class Media {
-    private int id;
+    private Integer id;
     private String title;
     private String category;
     private float price;
@@ -16,8 +16,12 @@ public class Media {
 
     }
 
+    public Media(int id) {
+        this.id = id;
+    }
 
-    public int getId() {return id;}
+
+    public Integer getId() {return id;}
 
     public String getTitle() {
         return title;
@@ -55,9 +59,4 @@ public class Media {
         this.title = title;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        Media otherMedia = (Media) obj;
-        return this.title != null && this.title.equals(otherMedia.title);
-    }
 }

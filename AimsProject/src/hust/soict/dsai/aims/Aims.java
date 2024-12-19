@@ -2,6 +2,8 @@ package hust.soict.dsai.aims;
 
 import hust.soict.dsai.aims.cart.Cart;
 import hust.soict.dsai.aims.media.*;
+import hust.soict.dsai.aims.screen.CartScreen;
+import hust.soict.dsai.aims.screen.ScreenManager;
 import hust.soict.dsai.aims.screen.StoreScreen;
 import hust.soict.dsai.aims.store.Store;
 
@@ -46,7 +48,8 @@ public class Aims {
         int choice;
 
 
-        new StoreScreen(store, cart);
+        ScreenManager screenManager = new ScreenManager(store, cart);
+
 
         cart.print();
 
@@ -118,7 +121,7 @@ public class Aims {
 
 
     //Handle
-    private static void handleViewStore(Store store, Cart cart, Scanner scanner) {
+    /*private static void handleViewStore(Store store, Cart cart, Scanner scanner) {
         int storeChoice;
         do {
             storeMenu();
@@ -158,9 +161,9 @@ public class Aims {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (storeChoice != 0);
-    }
+    }*/
 
-    private static void handleViewCart(Cart cart, Scanner scanner) {
+    /*private static void handleViewCart(Cart cart, Scanner scanner) {
         int cartChoice;
         do {
             cart.print();
@@ -205,7 +208,7 @@ public class Aims {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (cartChoice != 0);
-    }
+    }*/
 
 
 

@@ -1,15 +1,15 @@
 package hust.soict.dsai.aims.cart;
 
 import hust.soict.dsai.aims.media.Media;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class Cart {
     public static final int MAX_NUMBERS_ORDERED =20;
-    private ArrayList<Media> itemsOrdered = new ArrayList<>();
+    private ObservableList<Media> itemsOrdered = FXCollections.observableArrayList();
 
-    public ArrayList<Media> getItemsOrdered() {
+    public ObservableList<Media> getItemsOrdered() {
         return itemsOrdered;
     }
 
@@ -31,31 +31,43 @@ public class Cart {
 
     }
 
-    public void removeAllMedia(){
+    public void clear(){
         for (Media media : itemsOrdered) itemsOrdered.remove(media);
     }
 
-    public float totalPrice() {
-        int total = 0;
-        for (Media media : itemsOrdered) total += (int) media.getPrice();
-        return total;
+    public String totalPrice() {
+        float total =  0.0f;
+        for (Media media : itemsOrdered) total += media.getPrice();
+        return String.format("%.2f", total).replace(',', '.');
     }
 
-    public void print (){
-        System.out.println("***********************CART***********************" +
-                "\nOrdered Items:");
+    public String print (){
+        StringBuilder tmp = new StringBuilder();
+        tmp.append("***********************CART***********************" + "\nOrdered Items:\n");
         for (Media media: itemsOrdered){
-            System.out.println(media.toString());
+            tmp.append(media.toString());
+            tmp.append("\n");
         }
-        System.out.println("Total cost: " + totalPrice() +
-                "\n**************************************************");
+        tmp.append("Total cost: "); tmp.append(totalPrice());
+        tmp.append("\n**************************************************");
+
+        return tmp.toString();
     }
 
-    public Media find(String title){
+    public ObservableList<Media> find(String title){
+        ObservableList<Media> a = FXCollections.observableArrayList();
         for (Media media : itemsOrdered){
-            if (Objects.equals(media.getTitle(), title)) return media;
+            if (media.getTitle().toLowerCase().contains(title.toLowerCase())) a.add(media);
         }
-        return null;
+        return a;
+    }
+
+    public ObservableList<Media> findById(String id){
+        ObservableList<Media> b = FXCollections.observableArrayList();
+        for (Media media : itemsOrdered){
+            if (media.getId().toString().contains(id)) b.add(media);
+        }
+        return b;
     }
 
 }

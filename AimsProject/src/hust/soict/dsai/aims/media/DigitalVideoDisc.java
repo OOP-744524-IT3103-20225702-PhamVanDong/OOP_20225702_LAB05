@@ -7,7 +7,8 @@ public class DigitalVideoDisc extends Disc implements Playable {
     private static int nbDigitalVideoDiscs = 1;
 
     public DigitalVideoDisc() {
-
+        super(nbDigitalVideoDiscs);
+        nbDigitalVideoDiscs++;
     }
 
 
@@ -47,6 +48,7 @@ public class DigitalVideoDisc extends Disc implements Playable {
         this.image = image;
         this.detail = detail;
         this.demoLink = demoLink;
+        nbDigitalVideoDiscs++;
 
     }
 

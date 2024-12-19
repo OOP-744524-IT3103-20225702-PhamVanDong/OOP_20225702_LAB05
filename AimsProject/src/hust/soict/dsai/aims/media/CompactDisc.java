@@ -6,9 +6,11 @@ import java.util.List;
 public class CompactDisc extends Disc implements Playable {
     private String artist;
     private List<Track> tracks = new ArrayList<Track>();
+    private static int nbCompactDiscDiscs = 1;
 
     public CompactDisc() {
-        super();
+        super(nbCompactDiscDiscs);
+        nbCompactDiscDiscs++;
     }
 
 
@@ -19,22 +21,24 @@ public class CompactDisc extends Disc implements Playable {
 
 
     //Constructor
-    public CompactDisc(int id, String title, String category, float price, String director, int length, String artist, List<Track> tracks) {
-        super(id, title, category, price, director, length);
-        artist = artist;
-        this.tracks = tracks;
-    }
-
-    public CompactDisc(int id, String title, String artist, List<Track> tracks) {
-        super(id, title);
+    public CompactDisc(String title, String category, float price, String director, int length, String artist, List<Track> tracks) {
+        super(nbCompactDiscDiscs, title, category, price, director, length);
         this.artist = artist;
         this.tracks = tracks;
     }
 
-    public CompactDisc(int id, String title, String category, float price, String artist, List<Track> tracks) {
-        super(id, title, category, price);
+    public CompactDisc(String title, String artist, List<Track> tracks) {
+        super(nbCompactDiscDiscs, title);
         this.artist = artist;
         this.tracks = tracks;
+        nbCompactDiscDiscs++;
+    }
+
+    public CompactDisc(String title, String category, float price, String artist, List<Track> tracks) {
+        super(nbCompactDiscDiscs, title, category, price);
+        this.artist = artist;
+        this.tracks = tracks;
+        nbCompactDiscDiscs++;
     }
 
     //

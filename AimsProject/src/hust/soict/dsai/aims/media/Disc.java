@@ -22,6 +22,10 @@ public class Disc extends Media{
 
     }
 
+    public Disc(int id) {
+        super(id);
+    }
+
     public String getDirector() {
         return director;
     }

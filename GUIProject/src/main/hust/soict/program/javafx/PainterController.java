@@ -18,6 +18,7 @@ public class PainterController {
     private Boolean erase = false;
 
 
+
     @FXML
     void clearButtonPressed(ActionEvent event){
         drawingAreaPane.getChildren().clear();

@@ -6,17 +6,22 @@ import hust.soict.dsai.aims.store.Store;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import static com.sun.glass.ui.Cursor.setVisible;
+
 
 public class StoreScreen extends JFrame {
     private Store store;
     private Cart cart;
+    private ScreenManager screenManager;
+    private CartButtonListener cartButtonListener = new CartButtonListener();
 
-    public StoreScreen(Store store, Cart cart) {
-        this.store = store;
-        this.cart = cart;
+    public StoreScreen(ScreenManager screenManager) {
+        this.store = screenManager.getStore();
+        this.cart = screenManager.getCart();
+        this.screenManager = screenManager;
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
 
@@ -38,6 +43,7 @@ public class StoreScreen extends JFrame {
 
 
     JMenuBar createMenuBar() {
+        JMenuItem viewCart = new JMenuItem("View cart");
         JMenu menu = new JMenu("Options");
 
         JMenu smUpdateStore = new JMenu("Update Store");
@@ -47,7 +53,8 @@ public class StoreScreen extends JFrame {
 
         menu.add(smUpdateStore);
         menu.add(new JMenuItem("View store"));
-        menu.add(new JMenuItem("View cart"));
+        menu.add(viewCart);
+        viewCart.addActionListener(cartButtonListener);
 
         JMenuBar menuBar = new JMenuBar();
         menuBar.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -64,14 +71,16 @@ public class StoreScreen extends JFrame {
         title.setFont((new Font(title.getFont().getName(), Font.PLAIN, 50)));
         title.setForeground((Color.CYAN));
 
-        JButton cart = new JButton("View cart");
-        cart.setPreferredSize(new Dimension(100, 50));
-        cart.setMaximumSize((new Dimension(100, 50)));
+        JButton cartButton = new JButton("View cart");
+        cartButton.setPreferredSize(new Dimension(100, 50));
+        cartButton.setMaximumSize((new Dimension(100, 50)));
+        
+        cartButton.addActionListener(cartButtonListener);
 
         header.add(Box.createRigidArea(new Dimension(10, 10)));
         header.add(title);
         header.add(Box.createHorizontalGlue());
-        header.add(cart);
+        header.add(cartButton);
         header.add(Box.createRigidArea(new Dimension(10, 10)));
 
         return header;
@@ -90,6 +99,14 @@ public class StoreScreen extends JFrame {
         return center;
     }
 
+    private class CartButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            screenManager.getCartScreen().setVisible(true);
+            setVisible(false);
+        }
+    }
+    
 
 
 
