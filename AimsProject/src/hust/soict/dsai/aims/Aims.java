@@ -42,7 +42,7 @@ public class Aims {
 
 
         Store store = new Store();
-        store.addMedia(dvd3, dvd2, dvd1, dvd, cd, book);
+        store.addMedia(dvd3, dvd2, dvd1, dvd, cd, book, book);
         Cart cart = new Cart();
         Scanner scanner = new Scanner(System.in);
         int choice;

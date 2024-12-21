@@ -1,6 +1,9 @@
 package hust.soict.dsai.aims.screen;
 
+
 import hust.soict.dsai.aims.cart.Cart;
+import hust.soict.dsai.aims.media.CompactDisc;
+import hust.soict.dsai.aims.media.DigitalVideoDisc;
 import hust.soict.dsai.aims.media.Media;
 import hust.soict.dsai.aims.store.Store;
 
@@ -10,28 +13,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static com.sun.glass.ui.Cursor.setVisible;
 
-
-public class StoreScreen extends JFrame {
+public class AddCDScreen extends JFrame {
     private Store store;
-    private Cart cart;
     private ScreenManager screenManager;
-    private final CartButtonListener cartButtonListener = new CartButtonListener();
-    private final AddCDButtonListener addCDButtonListener = new AddCDButtonListener();
+    private CartButtonListener cartButtonListener = new CartButtonListener();
     private final AddBookButtonListener addBookButtonListener = new AddBookButtonListener();
     private final AddDVDButtonListener addDVDButtonListener = new AddDVDButtonListener();
-    private final JPanel center = new JPanel();
+    private JTextField title ;
+    private JTextField category;
+    private JTextField artist ;
+    private JTextField cost;
 
-    public StoreScreen(ScreenManager screenManager) {
+    public AddCDScreen(ScreenManager screenManager) {
         this.store = screenManager.getStore();
-        this.cart = screenManager.getCart();
         this.screenManager = screenManager;
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
 
         cp.add(createNorth(), BorderLayout.NORTH);
-        createCenter();
-        cp.add(center, BorderLayout.CENTER);
+        cp.add(createCenter(), BorderLayout.CENTER);
+        cp.add(createSouth(), BorderLayout.SOUTH);
+
 
         setVisible(true);
         setTitle("Store");
@@ -59,7 +63,6 @@ public class StoreScreen extends JFrame {
         smUpdateStore.add(addBook);
         addBook.addActionListener(addBookButtonListener);
         smUpdateStore.add(addCD);
-        addCD.addActionListener(addCDButtonListener);
         smUpdateStore.add(addDVD);
         addDVD.addActionListener(addDVDButtonListener);
 
@@ -83,38 +86,46 @@ public class StoreScreen extends JFrame {
         title.setFont((new Font(title.getFont().getName(), Font.PLAIN, 50)));
         title.setForeground((Color.CYAN));
 
-        JButton cartButton = new JButton("View cart");
-        cartButton.setPreferredSize(new Dimension(100, 50));
-        cartButton.setMaximumSize((new Dimension(100, 50)));
-        
-        cartButton.addActionListener(cartButtonListener);
 
         header.add(Box.createRigidArea(new Dimension(10, 10)));
         header.add(title);
         header.add(Box.createHorizontalGlue());
-        header.add(cartButton);
         header.add(Box.createRigidArea(new Dimension(10, 10)));
 
         return header;
     }
 
-    void createCenter() {
+    JPanel createCenter() {
+        JPanel center = new JPanel();
+        center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
+        title = addInputField("Title: *", center);
+        category = addInputField("Category:", center);
+        artist = addInputField("Artist:", center);
+        cost = addInputField("Cost: *", center);
+        center.add(Box.createRigidArea(new Dimension(10, 40)));
+        add(center, BorderLayout.CENTER);
 
-        center.setLayout(new GridLayout(3, 3, 2, 2));
-
-        ArrayList<Media> mediaInStore = store.getItems();
-        for (Media media : mediaInStore) {
-            MediaStore cell = new MediaStore(media, cart);
-            center.add(cell);
-        }
-
+        return center;
     }
 
-    void refresh(){
-        center.removeAll();
-        createCenter();
-        center.revalidate();
-        center.repaint();
+    public JTextField addInputField(String fieldName, JPanel panel) {
+        JPanel p = new JPanel(new FlowLayout());
+        JLabel label = new JLabel(fieldName);
+        label.setPreferredSize(new Dimension(60, 20));
+        p.add(label);
+        JTextField textField = new JTextField(15);
+        p.add(textField);
+        panel.add(p);
+        return textField;
+    }
+
+    JPanel createSouth(){
+        AddBtnListener addBtnListener = new AddBtnListener();
+        JPanel south = new JPanel();
+        JButton addBtn = new JButton("Add");
+        addBtn.addActionListener(addBtnListener);
+        south.add(addBtn);
+        return south;
     }
 
 
@@ -127,18 +138,29 @@ public class StoreScreen extends JFrame {
         }
     }
 
+    private class AddBtnListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            try {
+                CompactDisc compactDisc = new CompactDisc(title.getText(), category.getText(), Float.parseFloat(cost.getText()), artist.getText());
+                store.addMedia(compactDisc);
+                title.setText(null);
+                category.setText(null);
+                artist.setText(null);
+                cost.setText(null);
+                screenManager.getStoreScreen().refresh();
+                screenManager.getStoreScreen().setVisible(true);
+                setVisible(false);
+            } catch (Exception e){
+                System.out.println(e);
+            }
+        }
+    }
+
     private class AddDVDButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             screenManager.getAddDVDScreen().setVisible(true);
-            setVisible(false);
-        }
-    }
-
-    private class AddCDButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            screenManager.getAddCDScreen().setVisible(true);
             setVisible(false);
         }
     }
@@ -152,12 +174,8 @@ public class StoreScreen extends JFrame {
     }
 
 
-
-
-
-
-    
-
-
-
 }
+
+
+
+

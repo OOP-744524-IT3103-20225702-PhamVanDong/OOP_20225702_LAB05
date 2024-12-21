@@ -13,9 +13,15 @@ public class Book extends Media {
 
 
     //Constructor
-    public Book(int id, String title, String category, float price, List<String> authors) {
-        super(id, title,category,price);
+    public Book(String title, String category, float price, List<String> authors) {
+        super(nbBooks, title,category,price);
         this.authors = authors;
+        nbBooks++;
+    }
+
+    public Book(String title, String category, float price, String authors) {
+        super(nbBooks, title, category, price);
+        this.authors.add(authors);
         nbBooks++;
     }
 
